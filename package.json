@@ -1,0 +1,35 @@
+{
+  "name": "openadk",
+  "version": "0.1.0",
+  "description": "A workflow layer for reliable AI-assisted software delivery.",
+  "type": "module",
+  "bin": {
+    "openadk": "./src/cli.js"
+  },
+  "scripts": {
+    "start": "node ./src/cli.js",
+    "test": "node --test test/*.test.js"
+  },
+  "keywords": [
+    "ai-coding",
+    "agent",
+    "sdd",
+    "sdt",
+    "codex",
+    "opencode",
+    "cursor"
+  ],
+  "license": "MIT",
+  "files": [
+    "src",
+    "presets",
+    "docs",
+    "README.md",
+    "LICENSE",
+    "ROADMAP.md",
+    "CONTRIBUTING.md"
+  ],
+  "engines": {
+    "node": ">=20"
+  }
+}

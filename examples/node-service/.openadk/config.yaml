@@ -1,0 +1,13 @@
+defaultAgent: codex
+language: javascript
+preset: backend
+agents:
+  codex:
+    command: codex
+    args: []
+  opencode:
+    command: opencode
+    args: []
+  cursor:
+    command: cursor-agent
+    args: []
