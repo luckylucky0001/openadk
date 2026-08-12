@@ -1,8 +1,8 @@
 # OpenADK
 
-OpenADK is a workflow layer for reliable AI-assisted software delivery.
+OpenADK is a local, agent-native workflow layer for reliable AI-assisted software delivery.
 
-It brings **Spec Driven Development** and **Spec Driven Testing** to existing AI coding CLIs such as Codex, OpenCode, and Cursor.
+It brings one deterministic Spec lifecycle to Codex, OpenCode, Claude Code, and Cursor Agent.
 
 ## Why
 
@@ -26,98 +26,113 @@ openadk --help
 ## Quick Start
 
 ```bash
-openadk init --agent codex --language typescript --preset backend
-openadk config --model gpt-5
-openadk run "add passwordless login"
+cd your-project
+openadk start
 ```
 
-This creates:
+Then tell the Agent what you want to build, for example: "Create a Spec for passwordless login." OpenADK installs a project-native Orchestrator Skill so the Agent can use the local Spec engine through natural language.
+
+For a deterministic CLI-only flow:
+
+```bash
+openadk spec init "add passwordless login"
+openadk spec status
+openadk spec check
+openadk spec advance
+```
+
+`openadk start` prepares the project on first use and launches the configured native Agent. It does not fetch, pull, push, publish, sync, or update remote content. Use `--no-launch` when you only want to prepare project assets.
+
+This creates project method and evidence assets:
 
 ```text
 .openadk/
+.agents/skills/openadk-orchestrator/
+.claude/skills/openadk-orchestrator/
+.cursor/skills/openadk-orchestrator/
+.opencode/skills/openadk-orchestrator/
 docs/
 specs/
 ```
 
-The `specs/` directory holds the reviewable workflow artifacts:
+An existing non-empty project asks for one onboarding confirmation before these local assets are written. OpenADK records their version and integrity in `.openadk/project-pin.json`; startup reports upgrades but never adopts them implicitly.
 
-- `brainstorm.md`
-- `spec.md`
-- `plan.md`
+Each stateful Spec contains:
+
+- `requirements.md`
+- `design.md`
+- `decisions.md`
 - `tasks.md`
-- `test-analysis.md`
-- `test-cases.md`
-- `test-run.md`
-- `test-report.md`
+- `verification.md`
+- `receipts/*.json` after OpenADK executes verification commands
+- `spec-state.json`
+- `export.md` after an explicit export
+
+The state engine only permits adjacent transitions:
+
+```text
+draft -> specified -> planned -> tasked -> implementing -> verified -> archived
+```
+
+Every transition validates the artifacts needed for the next phase. Requirements use `FR-###` and `AC-###`; decisions, tasks, and verification use `D-###`, `T-###`, and `V-###` so reviewers can trace promises to implementation and evidence. Entering `verified` also requires successful OpenADK receipts for both the normal test suite and a separate adversarial command, with every AC covered.
 
 ## Commands
 
 ```bash
-openadk init [--agent codex|opencode|cursor] [--language typescript] [--preset backend] [--yes]
-openadk config [--agent codex|opencode|cursor] [--language typescript] [--preset backend] [--model gpt-5]
+openadk start [--no-launch] [--yes] [-- ...agentArgs]
+openadk init [--agent codex|opencode|claude|cursor] [--language typescript] [--preset backend] [--yes]
+openadk config [--agent codex|opencode|claude|cursor] [--language typescript] [--preset backend] [--model gpt-5]
 openadk presets
-openadk code [--agent codex|opencode|cursor|-t codex] [-- ...agentArgs]
-openadk run [--agent codex] [--no-test] "requirement" [-- ...agentArgs]
-openadk sdd <brainstorm|specify|plan|tasks|implement|ff|review|archive> [--agent codex] [--run] [text]
-openadk sdt <analyze|cases|run|report|ff> [--agent codex] [--run] [text]
+openadk code [--agent codex|opencode|claude|cursor|-t codex] [-- ...agentArgs]
+openadk spec <init|status|check|advance|export|recover --yes> [title|phase] [--id spec-id]
+openadk verify run --kind <test|adversarial|static> --covers AC-001[,AC-002] -- <command> [args]
+openadk project <status|protect [status|files...]>
+openadk project upgrade <status|apply --yes|recover --yes>
+openadk doctor [--json]
+openadk audit repo
 ```
 
-`openadk init --agent codex` stores the default agent in `.openadk/config.yaml`. Later SDD and SDT commands use that project-level default automatically, so `--agent` is only needed when you want a one-off override.
+`openadk init --agent codex` stores the default Agent in `.openadk/config.yaml`. `openadk start` and `openadk code` use that project-level default automatically.
+
+Protect files that a Spec must not change before implementation, then run verification through OpenADK so the gate receives machine evidence rather than copied terminal text:
+
+```bash
+openadk project protect README.md package.json
+openadk verify run --kind test --covers AC-001,AC-002 -- npm test
+openadk verify run --kind adversarial --covers AC-001,AC-002 -- node --test test/adversarial.test.js
+```
+
+Verification commands are executed directly without a shell. Receipts retain the exact argv, exit status, duration, and stdout/stderr hashes, but not the raw output. If Spec state is damaged, `openadk spec recover --yes` restores the latest valid OpenADK snapshot.
+
+| Agent value | Native command | Project-native method path |
+| --- | --- | --- |
+| `codex` | `codex` | `.agents/skills/openadk-orchestrator/` |
+| `opencode` | `opencode` | `.opencode/skills/openadk-orchestrator/` |
+| `claude` | `claude` | `.claude/skills/openadk-orchestrator/` |
+| `cursor` | `cursor-agent` | `.cursor/skills/openadk-orchestrator/` |
 
 To change the default later:
 
 ```bash
 openadk config --agent codex --model gpt-5
 openadk config --agent opencode
+openadk config --agent claude
 openadk config --agent cursor
 ```
 
-`openadk config --model gpt-5` stores default agent arguments in `.openadk/config.yaml`, so later SDD, SDT, implementation, and `openadk code` calls reuse the same model choice. For custom agent flags, use:
+`openadk config --model gpt-5` stores default Agent arguments in `.openadk/config.yaml`, so later `openadk start` and `openadk code` calls reuse the same model choice. For custom Agent flags, use:
 
 ```bash
 openadk config --agent-args "--model gpt-5 --reasoning high"
 ```
 
-`openadk run` is the full automated path. It creates starter SDD artifacts, asks the selected Agent to complete them, asks the Agent to implement, creates SDT artifacts, asks the Agent to complete the testing guidance, then runs local tests and writes the real result into `test-run.md` and `test-report.md`.
-
-```bash
-openadk run "add passwordless login"
-openadk run --no-test "add passwordless login"
-openadk run "add passwordless login" -- --model gpt-5.5
-```
-
-`openadk sdd ff` writes starter SDD artifacts. Add `--run` to ask the selected Agent to inspect the repository and overwrite `brainstorm.md`, `spec.md`, `plan.md`, and `tasks.md` with complete content:
-
-```bash
-openadk sdd ff --run "add passwordless login"
-```
-
-`openadk sdd implement` writes an Agent-ready `implement-prompt.md`. Add `--run` to pipe that prompt into the selected Agent CLI:
-
-```bash
-openadk sdd implement --run -- --model gpt-5
-```
-
-For Codex, OpenADK uses `codex exec -` under the hood because the interactive `codex` command requires a terminal. It defaults to `--ephemeral --sandbox workspace-write -C <current directory>` so the Agent can update files in the active project. You can override Codex flags after `--`.
-
-`openadk sdt ff` writes starter SDT artifacts. Add `--run` to ask the selected Agent to inspect the repository and overwrite `test-analysis.md`, `test-cases.md`, `test-run.md`, and `test-report.md` with complete testing guidance:
-
-```bash
-openadk sdt ff --run
-```
-
-`openadk sdt run` executes the local test command and writes the real command output into `test-run.md` and `test-report.md`. It auto-detects common project types such as `package.json`, `pyproject.toml`, `go.mod`, and `Cargo.toml`.
-
-```bash
-openadk sdt run
-openadk sdt run -- npm test
-```
+The project-native Orchestrator guides the Agent through requirements, design, decisions, tasks, implementation, verification, export, and archive. The Agent uses `openadk spec check` and `openadk spec advance`; there is no parallel legacy command model.
 
 ## Initialization Choices
 
 OpenADK follows three setup choices:
 
-- **Agent**: who executes the task, such as Codex, OpenCode, or Cursor CLI.
+- **Agent**: who executes the task: Codex, OpenCode, Claude Code, or Cursor Agent.
 - **Language**: which language conventions should shape plans and tests.
 - **Preset**: which domain knowledge pack should be installed.
 
@@ -140,15 +155,18 @@ Packaged presets live in `presets/*.md`, so teams can review, fork, and contribu
 
 See [examples/node-service](examples/node-service) for a tiny backend service that demonstrates the workflow against a real project.
 
+For a complete end-to-end scenario, see [CI 日志安全脱敏案例](docs/ci-log-redaction-quickstart.md). It covers requirement clarification, gate failures, FR/AC/D/T/V traceability, streaming and security verification, multi-Agent handoff, export, and archive.
+
 ## Core Idea
 
 Better AI coding is not only about better models. It is about better context, better constraints, better tests, and better team memory.
 
 ## Project Status
 
-This repository is an early MVP. The first goal is to make the workflow tangible and easy to discuss:
+OpenADK is an early open-source release focused on a small, auditable local core:
 
-- one command to initialize team memory,
-- one command family for SDD,
-- one command family for SDT,
-- one adapter layer for existing AI coding CLIs.
+- one canonical Spec and evidence model,
+- deterministic adjacent-phase gates,
+- project-native Agent methods,
+- explicit project adoption and method upgrades,
+- local-only safety, recovery, and repository audits.

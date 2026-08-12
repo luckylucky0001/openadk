@@ -18,7 +18,7 @@ A good preset is:
 - concise,
 - domain-specific,
 - easy to override,
-- focused on SDD and SDT guidance,
+- focused on the canonical Spec lifecycle and verification evidence,
 - free of vendor-specific internal assumptions.
 
 To add a preset:

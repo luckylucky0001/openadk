@@ -1,25 +1,27 @@
 # Roadmap
 
-## v0.1: Local Workflow
+## v0.3: Deterministic Spec Core
 
-- Initialize `.openadk`, `docs`, and `specs`.
-- Generate SDD artifacts.
-- Generate SDT artifacts.
-- Launch Codex, OpenCode, and Cursor CLI through a stable command.
+- Use one canonical Spec artifact model and command family.
+- Add adjacent phase gates, strict trace IDs, and digest-chained history.
+- Add one-time project adoption, multi-host method projection, and version pins.
+- Add symlink defenses, recoverable locks, initialization recovery, Doctor, and repository audit.
 
-## v0.2: Agent Prompts
+## v0.4: Trustworthy Verification
 
-- Generate agent-ready prompts from spec, plan, and tasks.
-- Add `openadk sdd implement --agent`.
-- Add `openadk sdd review --agent`.
+- Execute verification commands through OpenADK and issue structured receipts.
+- Require separate normal and adversarial receipts with complete AC coverage.
+- Protect explicitly immutable project files and bind the policy to verification history.
+- Recover damaged Spec state from trusted revision snapshots.
+- Strengthen native Agent instructions with exact grammar, commands, and boundary-test guidance.
 
-## v0.3: Repo Intelligence
+## v0.5: Repo Intelligence
 
 - Scan repository structure.
 - Generate initial coding and quality memory.
 - Load context based on changed files and task type.
 
-## v0.4: Knowledge Compounding
+## v0.6: Knowledge Compounding
 
 - Extract reusable decisions into `docs/`.
 - Add knowledge routing indexes.

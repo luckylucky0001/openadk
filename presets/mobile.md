@@ -6,10 +6,10 @@
 - Offline, flaky network, permissions, and performance.
 - Crash safety and release compatibility.
 
-## SDD Notes
+## Planning Notes
 
 - Separate shared product behavior from platform-specific behavior.
 
-## SDT Notes
+## Verification Notes
 
 - Cover lifecycle, permission, network, and device-variation cases.

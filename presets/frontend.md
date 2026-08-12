@@ -7,11 +7,11 @@
 - Component boundaries and state management.
 - Unit, interaction, and visual smoke tests.
 
-## SDD Notes
+## Planning Notes
 
 - Include user-visible behavior and non-goals.
 - Define responsive and accessibility expectations.
 
-## SDT Notes
+## Verification Notes
 
 - Cover critical flows, edge states, and regression-prone interactions.

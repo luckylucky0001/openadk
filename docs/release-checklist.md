@@ -5,7 +5,7 @@
 - Confirm `npm test` passes.
 - Run `node ./src/cli.js --help`.
 - Run `node ./src/cli.js presets`.
-- Smoke test `init`, `sdd ff`, `sdd implement`, and `sdt ff` in a temporary directory.
+- Smoke test `start`, `spec init`, `project protect`, `verify run`, `spec check`, `spec recover`, `doctor`, and `audit repo` in a temporary directory.
 - Review README examples.
 - Review `examples/node-service`.
 
@@ -31,4 +31,4 @@ Use SemVer:
 
 Positioning:
 
-> OpenADK is a workflow layer for reliable AI-assisted software delivery. It brings SDD and SDT to existing coding agents such as Codex, OpenCode, and Cursor.
+> OpenADK is a local, agent-native workflow layer that turns requirements, decisions, implementation tasks, and verification evidence into one reviewable Spec lifecycle.

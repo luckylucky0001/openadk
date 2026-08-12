@@ -18,6 +18,7 @@ Initial options:
 
 - `codex`
 - `opencode`
+- `claude`
 - `cursor`
 
 The project should not force a single agent. The workflow artifacts should stay stable even when teams swap models or tools.
