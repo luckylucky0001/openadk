@@ -105,7 +105,24 @@
     "source_revision": "be6cbf33409376da2873e2a0add065a19f173e0c"
   },
   "candidates": {},
-  "operation_id": "bootstrap-openadk-383d335d578bfdce5a5e8884da142b49f7a20cfa8b9a0cc1077b523704d8d84a",
-  "reviews": {},
+  "operation_id": "7f0c94c81310265e82ce9675b5332e2e",
+  "reviews": {
+    "1": {
+      "at": 1788871055,
+      "base": "be6cbf33409376da2873e2a0add065a19f173e0c",
+      "eligible": false,
+      "head": "50640f5dbe57697aa6fd439d62d74d6a8a9b6bdc",
+      "knowledge_uris": [
+        "viking://resources/review-demo/knowledge/bootstrap-bb59cb3cb9972d7d523d80fb61a02cc0f8e3fe3e629b01d428752b3427cf9fc4.md/bootstrap.md",
+        "viking://user/default/memories/experiences/review-demo/aefc81a114cd76046ac814a2bd5ec63aa6acbb511aedf18c68507fd31c9a2721.md",
+        "viking://user/default/memories/experiences/review-demo/66b1d7958be7a2190cd8f5f26fd580b463f588a272c3d44b3ba977f7724b586a.md",
+        "viking://user/default/memories/experiences/review-demo/33858926bd26aeacac670fd4bd9dacb33215d54f92eb20ce141739073d632020.md"
+      ],
+      "memory_version": "fc76b9ab7307466109a0c79de5edfc91916f546fd2f30cf81ee1d4fbcfd38bc1",
+      "pr": 1,
+      "signature": "4a6132b7a700e5a70b57f8ba0380a2da648135922ea462a1ffbb758929b751b7",
+      "summary": "静态审查了 README、src/spec-engine.js、src/verification.js 和 test/cli-smoke.test.js。新增的回执 command 元数据校验短路安全，distinct 命令逻辑也能在 implementing -> verified 时阻止完全相同的 test/adversarial 命令满足门禁。主要发现是新规则在 verified -> archived 重新校验时也会追溯生效，可能导致升级前已 verified 的 Spec 无法归档且没有受支持的补救路径。"
+    }
+  },
   "schema": 1
 }
