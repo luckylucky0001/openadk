@@ -225,6 +225,15 @@ The additive table can be removed after disabling the writer safely.
       process.execPath, "-e", "process.exit(0)"
     ]);
     assert.equal(adversarialReceipt.status, 0, adversarialReceipt.stderr);
+    const duplicatedCommand = run(dir, ["spec", "check"]);
+    assert.equal(duplicatedCommand.status, 1);
+    assert.match(duplicatedCommand.stdout, /Adversarial verification must use a command distinct/);
+
+    const distinctAdversarialReceipt = run(dir, [
+      "verify", "run", "--kind", "adversarial", "--covers", "AC-001", "--",
+      process.execPath, "-e", "process.exitCode = 0"
+    ]);
+    assert.equal(distinctAdversarialReceipt.status, 0, distinctAdversarialReceipt.stderr);
     assert.equal(run(dir, ["spec", "advance"]).status, 0);
     assert.equal(run(dir, ["spec", "export"]).status, 0);
     assert.ok(existsSync(join(specDir, "export.md")));

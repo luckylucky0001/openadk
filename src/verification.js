@@ -74,6 +74,8 @@ function validateReceipt(receipt, id, expectedRevision) {
     || receipt.statePhase !== "implementing" || receipt.stateRevision !== expectedRevision
     || !RECEIPT_KINDS.has(receipt.kind) || !Array.isArray(receipt.covers)
     || receipt.covers.length === 0 || receipt.covers.some((ac) => !/^AC-\d{3}$/.test(ac))
+    || typeof receipt.command?.executable !== "string" || receipt.command.executable.length === 0
+    || !Array.isArray(receipt.command.args) || receipt.command.args.some((arg) => typeof arg !== "string")
     || typeof receipt.passed !== "boolean" || receipt.integrity !== receiptIntegrity(receipt)) {
     fail("E_VERIFY_RECEIPT_INVALID", `Invalid verification receipt: ${receipt?.id || "unknown"}.`);
   }

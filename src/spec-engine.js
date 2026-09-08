@@ -297,6 +297,10 @@ function substantive(value) {
   return withoutComments.replace(/[-*#`\s]/g, "").length >= 8 && !hasPlaceholderLine;
 }
 
+function verificationCommandKey(receipt) {
+  return JSON.stringify([receipt.command.executable, ...receipt.command.args]);
+}
+
 async function validateTarget(projectDir, id, target, currentState) {
   const root = specPath(projectDir, id);
   const errors = [];
@@ -374,8 +378,17 @@ async function validateTarget(projectDir, id, target, currentState) {
     try {
       const receipts = await readVerificationReceipts(projectDir, id, expectedRevision);
       const passed = receipts.filter(({ receipt }) => receipt.passed);
-      if (!passed.some(({ receipt }) => receipt.kind === "test")) errors.push("Verification requires a passing test receipt from openadk verify run.");
-      if (!passed.some(({ receipt }) => receipt.kind === "adversarial")) errors.push("Verification requires a separate passing adversarial receipt.");
+      const tests = passed.filter(({ receipt }) => receipt.kind === "test");
+      const adversarial = passed.filter(({ receipt }) => receipt.kind === "adversarial");
+      if (tests.length === 0) errors.push("Verification requires a passing test receipt from openadk verify run.");
+      if (adversarial.length === 0) {
+        errors.push("Verification requires a separate passing adversarial receipt.");
+      } else if (tests.length > 0) {
+        const testCommands = new Set(tests.map(({ receipt }) => verificationCommandKey(receipt)));
+        if (!adversarial.some(({ receipt }) => !testCommands.has(verificationCommandKey(receipt)))) {
+          errors.push("Adversarial verification must use a command distinct from passing test commands.");
+        }
+      }
       for (const ac of acceptanceIds) {
         if (!passed.some(({ receipt }) => receipt.covers.includes(ac))) errors.push(`Passing verification receipts must cover ${ac}.`);
       }
