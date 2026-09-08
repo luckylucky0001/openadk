@@ -74,7 +74,7 @@ The state engine only permits adjacent transitions:
 draft -> specified -> planned -> tasked -> implementing -> verified -> archived
 ```
 
-Every transition validates the artifacts needed for the next phase. Requirements use `FR-###` and `AC-###`; decisions, tasks, and verification use `D-###`, `T-###`, and `V-###` so reviewers can trace promises to implementation and evidence. Entering `verified` also requires successful OpenADK receipts for both the normal test suite and a separate adversarial command, with every AC covered.
+Every transition validates the artifacts needed for the next phase. Requirements use `FR-###` and `AC-###`; decisions, tasks, and verification use `D-###`, `T-###`, and `V-###` so reviewers can trace promises to implementation and evidence. Entering `verified` also requires successful OpenADK receipts for both the normal test suite and a separate adversarial command, with every AC covered. The passing adversarial receipt must execute a different command (executable and arguments) from every passing test receipt, preventing the normal test command from being relabeled as adversarial evidence.
 
 ## Commands
 
