@@ -191,9 +191,34 @@
       "source_uri": null,
       "state": "applied",
       "target": "ma:knowledge:ma-7bc8d9cb2f8a4d5e40c8744bfd82db28"
+    },
+    "ma-ffd5677a8d84b16e893a71c982cb7ee4": {
+      "before": "",
+      "before_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": "# 云端验收合成条目 CLOUD-BD2932D-K8M4\n\n此条仅用于验证云端候选记忆的确认流程，不是 OpenADK 业务规则，不参与代码审查或批准。测试标记 CLOUD-BD2932D-K8M4，候选状态 ALPHA；其唯一用途是核对否认与修订操作。",
+      "content_hash": "787028952eb10ef9d68f8341bce240d662b3351cb3d9064fafab86700dd2fd89",
+      "expires": 1788970176,
+      "id": "ma-ffd5677a8d84b16e893a71c982cb7ee4",
+      "memory_version": "bd56b66aeee95c8d4641d527021d2b8617e6eeab938611ea16666d1037017450",
+      "metadata": {
+        "applicable_paths": [
+          "*"
+        ],
+        "memory_type": "experience"
+      },
+      "metadata_hash": "95eb4cd5442a38df1d4633b8304f5eb54b5b5661ae3f8c80402ce92bd2561be6",
+      "old_active": null,
+      "owner": "v2-live-test",
+      "revision": 1,
+      "session_id": "sesn-20260909150900-kwjmm",
+      "signature": "6dfce6db131ab0e71864b029d87521d18efcad17920415f07589973a5803e0b0",
+      "source": "managed-agents-memory-v1",
+      "source_uri": null,
+      "state": "pending",
+      "target": "ma:knowledge:ma-ffd5677a8d84b16e893a71c982cb7ee4"
     }
   },
-  "operation_id": "dac5d8181ded945275506f286cfd0604",
+  "operation_id": "d0036b64e2e17189e3cc7164b9241b1c",
   "reviews": {},
   "schema": 1
 }
