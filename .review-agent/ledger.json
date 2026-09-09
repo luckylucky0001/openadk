@@ -1,20 +1,20 @@
 {
   "active": {
     "ma:knowledge:ma-4e9b90a7564c58d38ee892ec9eb14949": {
-      "candidate_id": "ma-4e9b90a7564c58d38ee892ec9eb14949",
-      "content": "# V2 记忆验收夹具 Q7C9\n这是一条隔离验收数据，不是 OpenADK 的产品设计、审查规则或技术事实。测试标记已由操作者微调为 BETA。它仅用于核对否认、微调、确认以及跨会话召回流程；不应作为任何真实 MR 的裁决依据。旧标记 ALPHA 不再是本条目的有效测试值。",
-      "content_hash": "da9c715d74b27a6db22bc7391c1c298a5ad1252491775f9e760aaffe0130ec61",
+      "candidate_id": "ma-11aa2f62706deefddede9f8edc55aacf",
+      "content": "# V2 记忆验收夹具 Q7C9\n这是一条隔离验收数据，不是 OpenADK 的产品设计、审查规则或技术事实。当前测试值为 GAMMA；旧值 BETA 已废止。本纠错来自本轮（round 3）操作者的明确反馈：将测试值 BETA 更正为 GAMMA。它仅用于核对否认、微调、确认以及跨会话召回流程；不应作为任何真实 MR 的裁决依据。更早的旧标记 ALPHA 同样不再是本条目的有效测试值。",
+      "content_hash": "06a39a63dbf0cd97a18c8874f51c55ad64063c710cc4c8d6d4f9e7ce1b01666d",
       "metadata": {
         "applicable_paths": [],
         "memory_type": "experience"
       },
       "owner": "v2-live-test",
-      "revision": 2,
+      "revision": 1,
       "session_id": "sesn-20260909122803-f85fw",
-      "signature": "0ef4caa3e7927312aeb41f2eafeb7b8a007657c8c1a3ab9de3ba59fbf5a81c45",
+      "signature": "7d90620f8dc2cbce38a99dc4e8f5298f2b43aa7b7cd8d1094acc2aeb4fc3b625",
       "source": "managed-agents-memory-v1",
       "target": "ma:knowledge:ma-4e9b90a7564c58d38ee892ec9eb14949",
-      "uri": "viking://user/default/memories/experiences/review-v2-test-20260909/da9c715d74b27a6db22bc7391c1c298a5ad1252491775f9e760aaffe0130ec61.md"
+      "uri": "viking://user/default/memories/experiences/review-v2-test-20260909/06a39a63dbf0cd97a18c8874f51c55ad64063c710cc4c8d6d4f9e7ce1b01666d.md"
     },
     "ma:knowledge:ma-7bc8d9cb2f8a4d5e40c8744bfd82db28": {
       "candidate_id": "ma-7bc8d9cb2f8a4d5e40c8744bfd82db28",
@@ -53,7 +53,7 @@
       "uri": "viking://user/default/memories/experiences/review-v2-test-20260909/a42897a7aa1395f3dcfb0b81bd5e32e6d971ae50a4c20b4cd9dc3d6f8f40246e.md"
     }
   },
-  "applying": "ma-11aa2f62706deefddede9f8edc55aacf",
+  "applying": null,
   "candidates": {},
   "ma_candidates": {
     "ma-02943a7cd85f6c1bdb91b7c48324c595": {
@@ -88,6 +88,7 @@
       "content_hash": "06a39a63dbf0cd97a18c8874f51c55ad64063c710cc4c8d6d4f9e7ce1b01666d",
       "expires": 1788962276,
       "id": "ma-11aa2f62706deefddede9f8edc55aacf",
+      "memory_uri": "viking://user/default/memories/experiences/review-v2-test-20260909/06a39a63dbf0cd97a18c8874f51c55ad64063c710cc4c8d6d4f9e7ce1b01666d.md",
       "memory_version": "78b8ac19a024942cab7af95977a62641abb408c9bd9088aa1362cb3ddb180a4b",
       "metadata": {
         "applicable_paths": [],
@@ -113,10 +114,10 @@
       "owner": "v2-live-test",
       "revision": 1,
       "session_id": "sesn-20260909122803-f85fw",
-      "signature": "3c4e4c126ac1ccdb54df6c6b1ed7e1511c206fce178659be45d123bb60cf591d",
+      "signature": "83ba0c39f709350379e9eced66435c2a64af13f1280f1a229e0d33e6a97f2853",
       "source": "managed-agents-memory-v1",
       "source_uri": null,
-      "state": "applying",
+      "state": "applied",
       "target": "ma:knowledge:ma-4e9b90a7564c58d38ee892ec9eb14949"
     },
     "ma-4e9b90a7564c58d38ee892ec9eb14949": {
@@ -192,7 +193,7 @@
       "target": "ma:knowledge:ma-7bc8d9cb2f8a4d5e40c8744bfd82db28"
     }
   },
-  "operation_id": "82a4da6513c7b427150a44a343ea7d73",
+  "operation_id": "dac5d8181ded945275506f286cfd0604",
   "reviews": {},
   "schema": 1
 }
