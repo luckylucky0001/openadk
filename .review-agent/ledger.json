@@ -25,9 +25,32 @@
       "source_uri": null,
       "state": "denied",
       "target": "ma:knowledge:ma-02943a7cd85f6c1bdb91b7c48324c595"
+    },
+    "ma-4e9b90a7564c58d38ee892ec9eb14949": {
+      "before": "",
+      "before_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": "# V2 记忆验收夹具 Q7C9\n这是一条隔离验收数据，不是 OpenADK 的产品设计、审查规则或技术事实。测试标记为 ALPHA，仅用于核对否认、微调、确认以及跨会话召回流程；不应作为任何真实 MR 的裁决依据。",
+      "content_hash": "6abedf839cd0784915ab58b4c811c21b8279b9bb47d30eeee4c78b989e2b1119",
+      "expires": 1788961015,
+      "id": "ma-4e9b90a7564c58d38ee892ec9eb14949",
+      "memory_version": "dcd24240d85e1029b038b8ce29357b452d5521e0703ba3d1307e965073ebf616",
+      "metadata": {
+        "applicable_paths": [],
+        "memory_type": "experience"
+      },
+      "metadata_hash": "2e331e627b8f1027fecafff35bd3f4404e0698f51e563baae57232b8d29eeab9",
+      "old_active": null,
+      "owner": "v2-live-test",
+      "revision": 1,
+      "session_id": "sesn-20260909122803-f85fw",
+      "signature": "4a41f4d2dcc9cd1209a025ad6fbfb866ed07e16db54ca207622582443fa43f6a",
+      "source": "managed-agents-memory-v1",
+      "source_uri": null,
+      "state": "pending",
+      "target": "ma:knowledge:ma-4e9b90a7564c58d38ee892ec9eb14949"
     }
   },
-  "operation_id": "96cdcbea4cbfdccb856ab9b16bfa38ee",
+  "operation_id": "9f705b8b00f70dd7b7228d0f15cef7ed",
   "reviews": {},
   "schema": 1
 }
