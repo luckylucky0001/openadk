@@ -29,9 +29,9 @@
     "ma-4e9b90a7564c58d38ee892ec9eb14949": {
       "before": "",
       "before_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "content": "# V2 记忆验收夹具 Q7C9\n这是一条隔离验收数据，不是 OpenADK 的产品设计、审查规则或技术事实。测试标记为 ALPHA，仅用于核对否认、微调、确认以及跨会话召回流程；不应作为任何真实 MR 的裁决依据。",
-      "content_hash": "6abedf839cd0784915ab58b4c811c21b8279b9bb47d30eeee4c78b989e2b1119",
-      "expires": 1788961015,
+      "content": "# V2 记忆验收夹具 Q7C9\n这是一条隔离验收数据，不是 OpenADK 的产品设计、审查规则或技术事实。测试标记已由操作者微调为 BETA。它仅用于核对否认、微调、确认以及跨会话召回流程；不应作为任何真实 MR 的裁决依据。旧标记 ALPHA 不再是本条目的有效测试值。",
+      "content_hash": "da9c715d74b27a6db22bc7391c1c298a5ad1252491775f9e760aaffe0130ec61",
+      "expires": 1788961116,
       "id": "ma-4e9b90a7564c58d38ee892ec9eb14949",
       "memory_version": "dcd24240d85e1029b038b8ce29357b452d5521e0703ba3d1307e965073ebf616",
       "metadata": {
@@ -41,9 +41,9 @@
       "metadata_hash": "2e331e627b8f1027fecafff35bd3f4404e0698f51e563baae57232b8d29eeab9",
       "old_active": null,
       "owner": "v2-live-test",
-      "revision": 1,
+      "revision": 2,
       "session_id": "sesn-20260909122803-f85fw",
-      "signature": "4a41f4d2dcc9cd1209a025ad6fbfb866ed07e16db54ca207622582443fa43f6a",
+      "signature": "4af49d0d44d50e3043a635ac8b26f5777991aaa88a991f7ebef8d3d558ecea79",
       "source": "managed-agents-memory-v1",
       "source_uri": null,
       "state": "pending",
@@ -93,7 +93,7 @@
       "target": "ma:knowledge:ma-7bc8d9cb2f8a4d5e40c8744bfd82db28"
     }
   },
-  "operation_id": "a66e22535ef7c565a520fde220870eb7",
+  "operation_id": "a7696106bf9e9188a54fc9befe0d8b89",
   "reviews": {},
   "schema": 1
 }
