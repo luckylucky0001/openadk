@@ -1,6 +1,43 @@
 {
-  "active": {},
-  "applying": "ma-7bc8d9cb2f8a4d5e40c8744bfd82db28",
+  "active": {
+    "ma:knowledge:ma-7bc8d9cb2f8a4d5e40c8744bfd82db28": {
+      "candidate_id": "ma-7bc8d9cb2f8a4d5e40c8744bfd82db28",
+      "content": "# OpenADK 系统架构摘要｜v2 实测\n\n- 类型：background（项目定位与核心架构，全局约束）\n- 适用仓库：luckylucky0001/openadk（GitHub 公开仓库，npm 包名 openadk）\n- 核对代码版本：main 分支固定提交 `be6cbf33409376da2873e2a0add065a19f173e0c`（tree `1caab504f46773c485948bda844f4a28831c8264`），提交信息 \"feat: add deterministic spec verification and recovery\"；核对日期 2026-09-09。\n- 版本事实：package.json 中 npm 包版本 0.4.0；源码内 VERSION 常量同为 0.4.0；方法资产版本 src/project-assets.js 中 METHOD_VERSION = \"1.1.0\"，两者不可混用。Node.js >=20，ES Modules，无任何 dependencies/devDependencies（零第三方运行时依赖，测试用 node:test）。\n- 本条为源码逐文件阅读加本轮隔离运行实测生成；不是 PR 批准、CI 通过或历史 Bug 已回归的证明。代码版本变化后须重新核对。\n\n## 一、定位（已实现）\n\nOpenADK 自我定义为\"本地、agent-native 的工作流层\"：不为模型提供 API、不做云端 Agent 平台，而是把需求、设计、决策、任务、验证证据组织进同一套可审查的 Spec 生命周期，并以原生命令方式启动 Codex / OpenCode / Claude Code / Cursor Agent 四类宿主。README 与 docs/customer-playbook.md 明确理念：\"Better AI coding is about better context, constraints, tests, and team memory\"。\n\n## 二、模块职责（已逐文件核对 src/，共 10 个 JS 文件）\n\n- src/cli.js（499 行，bin 入口）：命令分派（init/start/config/presets/code/spec/verify/project/doctor/audit）；初始化脚手架与 .openadk/config.yaml 的极简正则式 YAML 读写（非完整 YAML 解析器）；init 写 5 份 memory 模板（constitution/coding/quality/reliability/security）+ language.md + 1 份 preset，并建立 docs/arch|product-specs|references 的 index；runCode 用 spawnSync(command, args, {shell:false, stdio:\"inherit\"}) 启动宿主并透传退出码。\n- src/agents.js（12 行）：四种 Agent 到原生命令的冻结映射 codex/opencode/claude/cursor-agent。\n- src/commands.js（129 行）：spec/verify/project/doctor/audit 子命令的薄分派层；verify 以 `--` 分隔，stdout/stderr 实时回显，失败时 process.exitCode 取回执退出码。\n- src/spec-engine.js（484 行，核心）：Spec 创建（临时目录+rename 原子落盘）、状态机与摘要链校验、五份 Markdown 的固定语法门禁、回执/保护策略核验、导出与 owner 校验、快照恢复。\n- src/verification.js（96 行）：仅在 implementing 阶段执行验证；spawnSync 不经 shell，maxBuffer 16MiB；生成 schemaVersion 1 回执（见第五节）。\n- src/project-assets.js（259 行）：六份受管理方法资产投影（.agents/.claude/.cursor/.opencode 下的 SKILL.md，加 .claude/rules 与 .cursor/rules 各一份），Orchestrator 方法正文内嵌于源码；inspect/adopt/upgrade/recover 状态机：new-project / adoption-required / healthy / upgrade-available / blocked / recovery-required；journal（project-assets.transaction.json）记录 before/target 摘要，恢复时外部改动即中止。\n- src/project-policy.js（95 行）：protected-files.json（schemaVersion 2）保存普通文件 SHA-256 基线；拒绝保护 .openadk 内部路径与绝对路径；文件已变更时拒绝静默重建基线。\n- src/runtime.js（157 行）：assertInside 路径边界、assertNoSymlinkWithin 逐组件符号链接检查、1MiB 有界 JSON、临时文件 wx 独占创建+rename 原子替换、可恢复锁（PID+hostname+UUID token，仅清理同主机死进程且二次 lstat 复核）。\n- src/doctor.js（62 行）：Node 版本、配置、宿主命令可执行性（PATH 探测，warn 级）、资产状态、保护文件五项本地诊断。\n- src/repository-audit.js（48 行）：公开发行纯度审计——包名必须 openadk、MIT、不得 private、禁 publishConfig、禁 preinstall/install/postinstall/prepublishOnly 生命周期脚本；并对 .js/.json/.md/.yaml 文本做特定私有 scope/主机/令牌/网关正则扫描。不是通用安全扫描器。\n\n## 三、数据流与目录布局（实测 ls 验证）\n\n- `.openadk/config.yaml`（默认 Agent、language、preset、四宿主 command/args）；`.openadk/memory/` 与 `.openadk/presets/` 为静态初始化文本，当前不是自动学习引擎；`presets/*.md` 随 npm 包分发（backend/common/frontend/fullstack/mobile 五份）。\n- `.openadk/project-pin.json`（采纳版本+各资产摘要）、`project-assets.json`（manifest）、`project-assets.transaction.json`（中断 journal）、`project-assets.lock`。\n- `specs/current.json` 指针（schemaVersion 1）；`specs/<id>/` 内为五份 Markdown + spec-state.json（schemaVersion 2）+ receipts/*.json + 导出后 export.md/export.owner.json；`.openadk/spec-snapshots/<id>/revision-N.json` 每次推进落快照。\n- `docs/arch|product-specs|references/index.md` 经 init 实测确认为一句话占位（\"Add ... here\"），尚无知识路由实现。\n- 启动链：start → inspectProject（journal/pin/漂移检查）→ 非空项目需一次确认（TTY 交互或 --yes）→ 缺 config 时 initProject（writeIfMissing 语义，不覆盖已有文件）→ adoptProject 投影资产 → 提示升级（不自动采纳）→ runCode 启动宿主。start 自身不执行 git 拉取/推送/发布；但被启动 Agent 与 verify 命令可联网，\"本地\"不等于网络隔离。\n\n## 四、Spec 生命周期（已实现，测试 test/cli-smoke.test.js 全链路覆盖）\n\n唯一状态序：draft→specified→planned→tasked→implementing→verified→archived；advance 仅允许相邻一步，锁内重读复核 revision/phase。history 每事件含 {revision,from,to,at,evidence,previousDigest,digest}，validateState 重算整条哈希链；实测篡改 history digest 即 E_SPEC_HISTORY_INVALID。\n\n门禁（validateTarget，固定英文 `## 标题`/行首正则解析，正文可中文但改成表格会漏识别）：\n- specified：requirements 六个章节实质内容（去 TBD/TODO 后 ≥8 字符）、≥1 个 `- FR-###:` 与 `- [ ] AC-###:`、编号唯一、Open Questions 必须显式写 None。\n- planned：design 七个固定章节实质化；≥1 个 `## D-###:` 且唯一；文档级存在 accepted/rejected/superseded 状态及 Context/Decision/Consequences 实质字段（非逐条 D 校验）。\n- tasked：T 复选框编号唯一无占位，每个 FR/AC 至少被某任务行引用。\n- implementing：继续复校前序制品。\n- verified：所有 T 勾选；V 行覆盖每个 AC 且 Commands 章节实质；必须有匹配 implementing 修订（预期 revision = 当前或当前-1）的 passed 回执，kind=test 与 kind=adversarial 各至少一份，passed 回执 covers 声明覆盖全部 AC；同时校验受保护文件；已 verified 之后再推进时会把 receipts 与 project-policy 摘要和 verified 事件 evidence 逐一比对，事后改动即报错。static 回执不能替代前两类，且门禁不强制 test/adversarial 的命令本身不同。\n- archived：必须先 export；export.owner.json 记录 specId/phase/revision、export.md 哈希与五份制品哈希，归档时全部复核。归档后 advance/export 被拒（E_SPEC_ARCHIVED），但文件并非 OS 级只读；archived 上 check 无下一阶段、不再复校制品。\n\n恢复：spec recover --yes 从快照目录按修订倒序选首个 validateState 通过者覆写 spec-state.json；只恢复状态，不恢复业务代码、五份正文或测试输出。createSpec 对 draft/revision 1 且指针缺失的半成品有初始化自愈分支。\n\n## 五、验证证据的组织理念（已实现）\n\n- 证据由程序生成而非抄写终端：verify run 直接执行 executable+argv（shell:false），回执字段含 specId、stateRevision、statePhase、kind、covers、command{executable,args}、startedAt、durationMs、exitCode、signal、stdoutSha256、stderrSha256、passed；integrity 为剔除自身字段后 JSON 的 SHA-256，读取时重算防篡改（实测篡改回执被 E_VERIFY_RECEIPT_INVALID 拦截）。\n- 回执不保存 stdout/stderr 原文（仅哈希），但当次输出仍回显 CLI；argv 入回执，故不能据此声称终端与参数不泄密。\n- 回执绑定 Spec 状态修订而非代码版本/源码树；covers 是操作者声明、非语义覆盖度量；哈希是完整性校验不是数字签名。\n- 普通测试与对抗测试被设计为两种目的（正常行为 vs 边界/错误/故障/安全），Orchestrator 方法正文要求对抗用例覆盖阈值两侧与失败点；但强制力仅为\"两种 kind 各有 passed 回执且 AC 全覆盖\"。\n- verification.md 的 V-### 行承载人工组织的证据叙述与残余风险，与机器回执互补；五份制品+回执+owner 最终由 export 聚合成一份可交接包。\n- 知识分层：单需求证据留在 specs/<id>/，跨需求可复用知识预留 docs/；自动提取/路由在当前版本未实现（见第七节）。\n\n## 六、本轮隔离验收实测（2026-09-09，均在 /tmp 隔离目录，未修改仓库、未联网注入凭据）\n\n- `git clone` 公开仓库后 HEAD = be6cbf33，与 project 工具固定版本一致。\n- Node v20.19.2 下 `npm test`（node --test test/*.test.js）：16 tests / 2 suites，pass 16 / fail 0 / skipped 0。用例覆盖帮助与旧命令名移除、config 改写、四宿主无 shell 启动、start 投影、门禁失败与越序拒绝、完整七阶段旅程、失败/对抗回执、回执与保护策略事后篡改拦截、导出防覆盖、接入确认、符号链接拒绝、pin/显式升级、journal 恢复、死锁回收、history 链篡改、快照恢复、保护文件漂移与拒绝重建基线、doctor 与 audit。\n- `npm run audit:repo`：OpenADK repository audit passed（退出码 0）。\n- 独立临时项目端到端冒烟：非空目录 start 需确认；--yes --no-launch 后生成 12 个初始化文件、六处宿主投影；spec init 产出 revision 1 draft；project status = healthy，Method version 1.1.0。\n- 局限：以上是本机一次性运行证据，非长期 CI 凭证；未真实启动四种商业 Agent CLI（PATH 中不存在），该路径由测试中的假可执行文件覆盖参数透传。\n\n## 七、明确属于规划/推测、不得表述为已实现\n\n- ROADMAP 列明而源码中不存在：v0.5 仓库结构扫描、初始代码知识生成、按改动文件加载上下文；v0.6 知识抽取到 docs/、路由索引、monorepo/多服务；v1.0 插件接口、CI 集成、多 Agent 评测、团队模板与策略包。\n- examples/node-service 是演示工程，不代表框架内置服务脚手架；docs/ci-log-redaction-quickstart.md 为端到端案例文档。\n- 初始化脚手架/config 写入未全部走 runtime 的原子写与锁，不能对所有写路径宣称同等并发保证；哈希/锁是本地工程防护，不抗同等文件权限的恶意者。\n- 评审本仓库 Git + OpenViking 记忆接入属于外围 Review 系统能力，不是 OpenADK 包内功能。\n\n## 八、来源文件（均为 be6cbf3 版本逐段实读）\n\npackage.json（全文）、README.md（全文 172 行）、ROADMAP.md（全文）、src/cli.js（1-499 全文）、src/commands.js（全文）、src/agents.js（全文）、src/spec-engine.js（1-484 全文）、src/verification.js（全文）、src/project-assets.js（全文）、src/project-policy.js（全文）、src/runtime.js（全文）、src/doctor.js（全文）、src/repository-audit.js（全文）、test/cli-smoke.test.js（全文 266 行）、test/safety.test.js（全文 178 行）、docs/customer-playbook.md（全文）、docs/arch/index.md（占位确认）、presets/ 与 examples/node-service 目录清单；知识侧另检索到同版本初始知识包 bootstrap（architecture/design/specs 三篇），其结论已由本轮源码重读与隔离运行复核。",
+      "content_hash": "a42897a7aa1395f3dcfb0b81bd5e32e6d971ae50a4c20b4cd9dc3d6f8f40246e",
+      "metadata": {
+        "applicable_paths": [
+          "src/cli.js",
+          "src/commands.js",
+          "src/agents.js",
+          "src/spec-engine.js",
+          "src/verification.js",
+          "src/project-assets.js",
+          "src/project-policy.js",
+          "src/runtime.js",
+          "src/doctor.js",
+          "src/repository-audit.js",
+          "README.md",
+          "ROADMAP.md",
+          "package.json",
+          "docs/**",
+          "presets/**",
+          "test/**",
+          "examples/**",
+          "specs/**",
+          ".openadk/**"
+        ],
+        "memory_type": "background"
+      },
+      "owner": "v2-live-test",
+      "revision": 1,
+      "session_id": "sesn-20260909123344-pclwn",
+      "signature": "5b20cb00dd269708ce0a3e79af900d5164b57b933f38a1627c3d7e80dc63c017",
+      "source": "managed-agents-memory-v1",
+      "target": "ma:knowledge:ma-7bc8d9cb2f8a4d5e40c8744bfd82db28",
+      "uri": "viking://user/default/memories/experiences/review-v2-test-20260909/a42897a7aa1395f3dcfb0b81bd5e32e6d971ae50a4c20b4cd9dc3d6f8f40246e.md"
+    }
+  },
+  "applying": null,
   "candidates": {},
   "ma_candidates": {
     "ma-02943a7cd85f6c1bdb91b7c48324c595": {
@@ -58,6 +95,7 @@
       "content_hash": "a42897a7aa1395f3dcfb0b81bd5e32e6d971ae50a4c20b4cd9dc3d6f8f40246e",
       "expires": 1788961099,
       "id": "ma-7bc8d9cb2f8a4d5e40c8744bfd82db28",
+      "memory_uri": "viking://user/default/memories/experiences/review-v2-test-20260909/a42897a7aa1395f3dcfb0b81bd5e32e6d971ae50a4c20b4cd9dc3d6f8f40246e.md",
       "memory_version": "dcd24240d85e1029b038b8ce29357b452d5521e0703ba3d1307e965073ebf616",
       "metadata": {
         "applicable_paths": [
@@ -88,14 +126,14 @@
       "owner": "v2-live-test",
       "revision": 1,
       "session_id": "sesn-20260909123344-pclwn",
-      "signature": "e17a5ef8a7007a0ed928926cb2f4e339bf7bef6d54ba44a8e479cb240d6ee285",
+      "signature": "e31d144011d47da3dd5011fe62aaddf04941beb45a60aa9d6653ea45bebc5989",
       "source": "managed-agents-memory-v1",
       "source_uri": null,
-      "state": "applying",
+      "state": "applied",
       "target": "ma:knowledge:ma-7bc8d9cb2f8a4d5e40c8744bfd82db28"
     }
   },
-  "operation_id": "6cbb8111005ef67757cae3ec0c75d9d6",
+  "operation_id": "ab37301963e8d022a751e260fac5ec1d",
   "reviews": {},
   "schema": 1
 }
