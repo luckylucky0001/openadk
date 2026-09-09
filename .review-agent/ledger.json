@@ -53,7 +53,7 @@
       "uri": "viking://user/default/memories/experiences/review-v2-test-20260909/a42897a7aa1395f3dcfb0b81bd5e32e6d971ae50a4c20b4cd9dc3d6f8f40246e.md"
     }
   },
-  "applying": null,
+  "applying": "ma-11aa2f62706deefddede9f8edc55aacf",
   "candidates": {},
   "ma_candidates": {
     "ma-02943a7cd85f6c1bdb91b7c48324c595": {
@@ -82,6 +82,8 @@
     "ma-11aa2f62706deefddede9f8edc55aacf": {
       "before": "# V2 记忆验收夹具 Q7C9\n这是一条隔离验收数据，不是 OpenADK 的产品设计、审查规则或技术事实。测试标记已由操作者微调为 BETA。它仅用于核对否认、微调、确认以及跨会话召回流程；不应作为任何真实 MR 的裁决依据。旧标记 ALPHA 不再是本条目的有效测试值。",
       "before_hash": "da9c715d74b27a6db22bc7391c1c298a5ad1252491775f9e760aaffe0130ec61",
+      "confirmed_at": 1788958742,
+      "confirmed_memory_version": "78b8ac19a024942cab7af95977a62641abb408c9bd9088aa1362cb3ddb180a4b",
       "content": "# V2 记忆验收夹具 Q7C9\n这是一条隔离验收数据，不是 OpenADK 的产品设计、审查规则或技术事实。当前测试值为 GAMMA；旧值 BETA 已废止。本纠错来自本轮（round 3）操作者的明确反馈：将测试值 BETA 更正为 GAMMA。它仅用于核对否认、微调、确认以及跨会话召回流程；不应作为任何真实 MR 的裁决依据。更早的旧标记 ALPHA 同样不再是本条目的有效测试值。",
       "content_hash": "06a39a63dbf0cd97a18c8874f51c55ad64063c710cc4c8d6d4f9e7ce1b01666d",
       "expires": 1788962276,
@@ -111,10 +113,10 @@
       "owner": "v2-live-test",
       "revision": 1,
       "session_id": "sesn-20260909122803-f85fw",
-      "signature": "6b5897f485a56d1407c8286b5974efc27f4fc042bc82a244eca423e09a7acf49",
+      "signature": "3c4e4c126ac1ccdb54df6c6b1ed7e1511c206fce178659be45d123bb60cf591d",
       "source": "managed-agents-memory-v1",
       "source_uri": null,
-      "state": "pending",
+      "state": "applying",
       "target": "ma:knowledge:ma-4e9b90a7564c58d38ee892ec9eb14949"
     },
     "ma-4e9b90a7564c58d38ee892ec9eb14949": {
@@ -190,7 +192,7 @@
       "target": "ma:knowledge:ma-7bc8d9cb2f8a4d5e40c8744bfd82db28"
     }
   },
-  "operation_id": "16da618a042a749430e96f230e4c5592",
+  "operation_id": "82a4da6513c7b427150a44a343ea7d73",
   "reviews": {},
   "schema": 1
 }
