@@ -37,7 +37,7 @@
       "uri": "viking://user/default/memories/experiences/review-v2-test-20260909/a42897a7aa1395f3dcfb0b81bd5e32e6d971ae50a4c20b4cd9dc3d6f8f40246e.md"
     }
   },
-  "applying": null,
+  "applying": "ma-4e9b90a7564c58d38ee892ec9eb14949",
   "candidates": {},
   "ma_candidates": {
     "ma-02943a7cd85f6c1bdb91b7c48324c595": {
@@ -66,6 +66,8 @@
     "ma-4e9b90a7564c58d38ee892ec9eb14949": {
       "before": "",
       "before_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "confirmed_at": 1788957941,
+      "confirmed_memory_version": "a0ec6123f4924a5f36e3fc8ba0119d7f3a6850f9d81b803d1874eae906bf30f5",
       "content": "# V2 记忆验收夹具 Q7C9\n这是一条隔离验收数据，不是 OpenADK 的产品设计、审查规则或技术事实。测试标记已由操作者微调为 BETA。它仅用于核对否认、微调、确认以及跨会话召回流程；不应作为任何真实 MR 的裁决依据。旧标记 ALPHA 不再是本条目的有效测试值。",
       "content_hash": "da9c715d74b27a6db22bc7391c1c298a5ad1252491775f9e760aaffe0130ec61",
       "expires": 1788961116,
@@ -80,10 +82,10 @@
       "owner": "v2-live-test",
       "revision": 2,
       "session_id": "sesn-20260909122803-f85fw",
-      "signature": "4af49d0d44d50e3043a635ac8b26f5777991aaa88a991f7ebef8d3d558ecea79",
+      "signature": "8305058db245f592f3abe9805e3959ecb1ce946919d2e5b9467221ffd8fbe0f6",
       "source": "managed-agents-memory-v1",
       "source_uri": null,
-      "state": "pending",
+      "state": "applying",
       "target": "ma:knowledge:ma-4e9b90a7564c58d38ee892ec9eb14949"
     },
     "ma-7bc8d9cb2f8a4d5e40c8744bfd82db28": {
@@ -133,7 +135,7 @@
       "target": "ma:knowledge:ma-7bc8d9cb2f8a4d5e40c8744bfd82db28"
     }
   },
-  "operation_id": "ab37301963e8d022a751e260fac5ec1d",
+  "operation_id": "59e9de78aa4d832038196df6899777a1",
   "reviews": {},
   "schema": 1
 }
