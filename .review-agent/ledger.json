@@ -18,16 +18,16 @@
       "metadata_hash": "2e331e627b8f1027fecafff35bd3f4404e0698f51e563baae57232b8d29eeab9",
       "old_active": null,
       "owner": "v2-live-test",
-      "revision": 1,
+      "revision": 2,
       "session_id": "sesn-20260909122803-f85fw",
-      "signature": "e838d7ccd0e4aca62344d24429c6719995dd6000adb391309b195b6c2dc3ffd9",
+      "signature": "2d9afbef2274d9df8c2b1e71e2256b1827ce8485119558ac55c1bd0cf4a5f0b6",
       "source": "managed-agents-memory-v1",
       "source_uri": null,
-      "state": "pending",
+      "state": "denied",
       "target": "ma:knowledge:ma-02943a7cd85f6c1bdb91b7c48324c595"
     }
   },
-  "operation_id": "22bcb41df8a7d62a001abdcc535fe036",
+  "operation_id": "96cdcbea4cbfdccb856ab9b16bfa38ee",
   "reviews": {},
   "schema": 1
 }
