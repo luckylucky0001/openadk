@@ -1,6 +1,25 @@
 {
-  "active": {},
-  "applying": "ma-124a64536989781e6267697c682b3cbb",
+  "active": {
+    "ma:knowledge:ma-124a64536989781e6267697c682b3cbb": {
+      "candidate_id": "ma-124a64536989781e6267697c682b3cbb",
+      "content": "本条仅用于2026年9月10日独立控制台桥接演示验收，不是OpenADK产品事实。修订后标记：CONSOLE-DEMO-REVISED-20260910。Managed Agents负责对话；AgentKit执行受保护操作；用户在认证确认页核对完整内容后，Git保存批准版本，OpenViking保存长期知识。拒绝的内容不得生效。",
+      "content_hash": "38eeb1689dad01f6d27cdc129f09b77ae9a8fa36079bc261c3bacf917f738894",
+      "metadata": {
+        "applicable_paths": [
+          "*"
+        ],
+        "memory_type": "background"
+      },
+      "owner": "console-live-20260910",
+      "revision": 2,
+      "session_id": "sesn-20260910085500-wmg88",
+      "signature": "137ece472077122c2e2808dce0de1ce8d148761cb6cd54c719a2a29ebac428dc",
+      "source": "managed-agents-memory-v1",
+      "target": "ma:knowledge:ma-124a64536989781e6267697c682b3cbb",
+      "uri": "viking://user/default/memories/experiences/review-console-20260910/38eeb1689dad01f6d27cdc129f09b77ae9a8fa36079bc261c3bacf917f738894.md"
+    }
+  },
+  "applying": null,
   "candidates": {},
   "ma_candidates": {
     "ma-006728fd0ff3ae98184ee3fc74dceeb1": {
@@ -39,6 +58,7 @@
       "expires": 1789038012,
       "id": "ma-124a64536989781e6267697c682b3cbb",
       "knowledge_scope": "project",
+      "memory_uri": "viking://user/default/memories/experiences/review-console-20260910/38eeb1689dad01f6d27cdc129f09b77ae9a8fa36079bc261c3bacf917f738894.md",
       "memory_version": "c5653177c2626a95fa3cedd079715aaa16a0d82c9c5141980a818e8fd9b8e41a",
       "metadata": {
         "applicable_paths": [
@@ -51,14 +71,14 @@
       "owner": "console-live-20260910",
       "revision": 2,
       "session_id": "sesn-20260910085500-wmg88",
-      "signature": "c16626fe7b248d0182ec1ebdc2bb0a6f18df24420da85ff294351d66b88fdb5c",
+      "signature": "3e442df85a6624fe94e34c87928b24ce0e6fb9cf19e6c663e30020c8ce74d7e1",
       "source": "managed-agents-memory-v1",
       "source_uri": null,
-      "state": "applying",
+      "state": "applied",
       "target": "ma:knowledge:ma-124a64536989781e6267697c682b3cbb"
     }
   },
-  "operation_id": "1fa89ed1ca7e99da82f14b095217098b",
+  "operation_id": "9649cde66c3065b66cc2b34c9a8650c4",
   "reviews": {},
   "schema": 1
 }
