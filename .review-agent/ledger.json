@@ -1,6 +1,6 @@
 {
   "active": {},
-  "applying": null,
+  "applying": "ma-124a64536989781e6267697c682b3cbb",
   "candidates": {},
   "ma_candidates": {
     "ma-006728fd0ff3ae98184ee3fc74dceeb1": {
@@ -32,6 +32,8 @@
     "ma-124a64536989781e6267697c682b3cbb": {
       "before": "",
       "before_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "confirmed_at": 1789034455,
+      "confirmed_memory_version": "c5653177c2626a95fa3cedd079715aaa16a0d82c9c5141980a818e8fd9b8e41a",
       "content": "本条仅用于2026年9月10日独立控制台桥接演示验收，不是OpenADK产品事实。修订后标记：CONSOLE-DEMO-REVISED-20260910。Managed Agents负责对话；AgentKit执行受保护操作；用户在认证确认页核对完整内容后，Git保存批准版本，OpenViking保存长期知识。拒绝的内容不得生效。",
       "content_hash": "38eeb1689dad01f6d27cdc129f09b77ae9a8fa36079bc261c3bacf917f738894",
       "expires": 1789038012,
@@ -49,14 +51,14 @@
       "owner": "console-live-20260910",
       "revision": 2,
       "session_id": "sesn-20260910085500-wmg88",
-      "signature": "d38ee9a8d5b30a1eb64ecb47fed694cfc63440b868c8c3d6c7253e47de47593f",
+      "signature": "c16626fe7b248d0182ec1ebdc2bb0a6f18df24420da85ff294351d66b88fdb5c",
       "source": "managed-agents-memory-v1",
       "source_uri": null,
-      "state": "pending",
+      "state": "applying",
       "target": "ma:knowledge:ma-124a64536989781e6267697c682b3cbb"
     }
   },
-  "operation_id": "37b02e27334a00e2583c8be470b66d19",
+  "operation_id": "1fa89ed1ca7e99da82f14b095217098b",
   "reviews": {},
   "schema": 1
 }
