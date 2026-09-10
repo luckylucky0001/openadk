@@ -1,11 +1,13 @@
 {
   "active": {},
-  "applying": null,
+  "applying": "ma-99070a74dca280d0c3072ab6cf337ee6",
   "candidates": {},
   "ma_candidates": {
     "ma-99070a74dca280d0c3072ab6cf337ee6": {
       "before": "",
       "before_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "confirmed_at": 1789034642,
+      "confirmed_memory_version": "a7e298ba33e9a398938feff00213761d76e5be2dfc8fdb5907f5a89e95436e7a",
       "content": "2026年9月10日独立演示验收规则：跨项目复用的测试经验必须标注来源与适用条件，不应把其他项目实现当作当前项目事实。本条仅属于隔离演示团队，不是生产规则。",
       "content_hash": "c996ebf63a85aed8140653e603a9955b539835d3b9235bde170bdf57275a4581",
       "expires": 1789038124,
@@ -23,14 +25,14 @@
       "owner": "console-live-20260910",
       "revision": 1,
       "session_id": "sesn-20260910085500-wmg88",
-      "signature": "4f44d616b391b058132444aed0abd72e6d2f3c45c44982284ea74e8476d66d85",
+      "signature": "07799e2c595f4bb853a825f57f272c0da495d64dfc2145533248295e5df77562",
       "source": "managed-agents-memory-v1",
       "source_uri": null,
-      "state": "pending",
+      "state": "applying",
       "target": "ma:knowledge:ma-99070a74dca280d0c3072ab6cf337ee6"
     }
   },
-  "operation_id": "5b44074207a8b599699f58e2a8bf17d2",
+  "operation_id": "178248324a632a723c8485ebbaaf5138",
   "reviews": {},
   "schema": 1
 }
