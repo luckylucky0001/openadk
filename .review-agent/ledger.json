@@ -2,6 +2,35 @@
   "active": {},
   "applying": null,
   "candidates": {},
+  "ma_candidates": {
+    "ma-006728fd0ff3ae98184ee3fc74dceeb1": {
+      "before": "",
+      "before_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": "【演示验收专用·非产品事实】本条仅用于2026年9月10日控制台桥接演示验收，不是 OpenADK 产品事实，不得作为 OpenADK 功能、架构或路线图的依据。\n\n演示链路职责划分：\n- Managed Agents：负责对话与分析；\n- AgentKit：执行业务工具（读记忆、检索知识、读取仓库/PR、提交审查等）；\n- Git：记录批准版本（批准指针/固定版本）；\n- OpenViking：保存经确认页面确认后的知识。\n\n时效与适用范围：仅适用于 2026-09-10 控制台桥接演示验收场景；项目专属（project），不提升为团队共享知识。演示结束或与项目实际事实冲突时，应以仓库当前版本原文与已确认的正式知识为准。",
+      "content_hash": "4d468993d40a8ec475286c3111a187f10743441995cf9049ea7f514e51193487",
+      "expires": 1789036855,
+      "id": "ma-006728fd0ff3ae98184ee3fc74dceeb1",
+      "knowledge_scope": "project",
+      "memory_version": "c5653177c2626a95fa3cedd079715aaa16a0d82c9c5141980a818e8fd9b8e41a",
+      "metadata": {
+        "applicable_paths": [
+          "*"
+        ],
+        "memory_type": "background"
+      },
+      "metadata_hash": "4a6babf62825b78965b48736cba9a87027d4ddc224c8ad5daf82408e603257f0",
+      "old_active": null,
+      "owner": "console-live-20260910",
+      "revision": 1,
+      "session_id": "sesn-20260910085500-wmg88",
+      "signature": "639fe5d3d187d0a61924966d68c8e14f50100525bfb33c5c031823226beee9a1",
+      "source": "managed-agents-memory-v1",
+      "source_uri": null,
+      "state": "pending",
+      "target": "ma:knowledge:ma-006728fd0ff3ae98184ee3fc74dceeb1"
+    }
+  },
+  "operation_id": "7a83be45adc21740fa14b0eea6138dbf",
   "reviews": {},
   "schema": 1
 }
