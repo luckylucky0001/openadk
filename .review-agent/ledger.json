@@ -28,9 +28,35 @@
       "source_uri": null,
       "state": "denied",
       "target": "ma:knowledge:ma-006728fd0ff3ae98184ee3fc74dceeb1"
+    },
+    "ma-124a64536989781e6267697c682b3cbb": {
+      "before": "",
+      "before_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": "本条仅用于2026年9月10日控制台桥接演示验收，不是OpenADK产品事实。用户可以拒绝、修改或确认记忆草稿；确认后的知识进入独立测试命名空间。",
+      "content_hash": "eb70c1ebbaae8c0d6df7f7e09ee61b770ad4a64587f30d8f27d000949862e35e",
+      "expires": 1789037253,
+      "id": "ma-124a64536989781e6267697c682b3cbb",
+      "knowledge_scope": "project",
+      "memory_version": "c5653177c2626a95fa3cedd079715aaa16a0d82c9c5141980a818e8fd9b8e41a",
+      "metadata": {
+        "applicable_paths": [
+          "*"
+        ],
+        "memory_type": "background"
+      },
+      "metadata_hash": "4a6babf62825b78965b48736cba9a87027d4ddc224c8ad5daf82408e603257f0",
+      "old_active": null,
+      "owner": "console-live-20260910",
+      "revision": 1,
+      "session_id": "sesn-20260910085500-wmg88",
+      "signature": "aba19e64f1b9b8611aa47aefca5b9ac764ec85d34fdb3141c7997a447a163e30",
+      "source": "managed-agents-memory-v1",
+      "source_uri": null,
+      "state": "pending",
+      "target": "ma:knowledge:ma-124a64536989781e6267697c682b3cbb"
     }
   },
-  "operation_id": "fba6d6b2d50310a4211ee698e928a621",
+  "operation_id": "b6c4964e6b500de152dcd535f0fb7ebd",
   "reviews": {},
   "schema": 1
 }
