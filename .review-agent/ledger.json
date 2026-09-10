@@ -1,6 +1,25 @@
 {
-  "active": {},
-  "applying": "ma-99070a74dca280d0c3072ab6cf337ee6",
+  "active": {
+    "ma:knowledge:ma-99070a74dca280d0c3072ab6cf337ee6": {
+      "candidate_id": "ma-99070a74dca280d0c3072ab6cf337ee6",
+      "content": "2026年9月10日独立演示验收规则：跨项目复用的测试经验必须标注来源与适用条件，不应把其他项目实现当作当前项目事实。本条仅属于隔离演示团队，不是生产规则。",
+      "content_hash": "c996ebf63a85aed8140653e603a9955b539835d3b9235bde170bdf57275a4581",
+      "metadata": {
+        "applicable_paths": [
+          "*"
+        ],
+        "memory_type": "experience"
+      },
+      "owner": "console-live-20260910",
+      "revision": 1,
+      "session_id": "sesn-20260910085500-wmg88",
+      "signature": "0ca9833cae7b8d91339f5d431e83097d3b6b317d9aedcfd7bd5fa11b3d652992",
+      "source": "managed-agents-memory-v1",
+      "target": "ma:knowledge:ma-99070a74dca280d0c3072ab6cf337ee6",
+      "uri": "viking://user/default/memories/experiences/shared-56d1c795e400139912681bfda2b55bd9/c996ebf63a85aed8140653e603a9955b539835d3b9235bde170bdf57275a4581.md"
+    }
+  },
+  "applying": null,
   "candidates": {},
   "ma_candidates": {
     "ma-99070a74dca280d0c3072ab6cf337ee6": {
@@ -13,6 +32,7 @@
       "expires": 1789038124,
       "id": "ma-99070a74dca280d0c3072ab6cf337ee6",
       "knowledge_scope": "team",
+      "memory_uri": "viking://user/default/memories/experiences/shared-56d1c795e400139912681bfda2b55bd9/c996ebf63a85aed8140653e603a9955b539835d3b9235bde170bdf57275a4581.md",
       "memory_version": "a7e298ba33e9a398938feff00213761d76e5be2dfc8fdb5907f5a89e95436e7a",
       "metadata": {
         "applicable_paths": [
@@ -25,14 +45,14 @@
       "owner": "console-live-20260910",
       "revision": 1,
       "session_id": "sesn-20260910085500-wmg88",
-      "signature": "07799e2c595f4bb853a825f57f272c0da495d64dfc2145533248295e5df77562",
+      "signature": "238bd211b8b76e68a2d0a5efaf71cfa16430925a9b6188dd58d1d0ae7d1383e8",
       "source": "managed-agents-memory-v1",
       "source_uri": null,
-      "state": "applying",
+      "state": "applied",
       "target": "ma:knowledge:ma-99070a74dca280d0c3072ab6cf337ee6"
     }
   },
-  "operation_id": "178248324a632a723c8485ebbaaf5138",
+  "operation_id": "d2ba10bfe8698f53e49f5cc71ace7cda",
   "reviews": {},
   "schema": 1
 }
