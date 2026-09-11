@@ -158,9 +158,9 @@
     "ma-a106d4e553ab612bb3ce8c0c9706904f": {
       "before": "",
       "before_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "content": "【会话保存验收 20260911】仅用于验证演示保存流程，不是项目业务规则。需要在确认后才生效。",
-      "content_hash": "b555efad898423fd2e31963204ba6349d44eec43d310ae696c4fdc26787c8b7f",
-      "expires": 1789108960,
+      "content": "【会话保存验收 20260911】仅用于验证演示保存流程，不是项目业务规则。保存前核对全文，保存后核对 OpenViking 原文与 Git 生效记录。",
+      "content_hash": "2862d552d5a016c533df529cfad8fe57d90a12f724c226ba7f9c1b4859037548",
+      "expires": 1789109009,
       "id": "ma-a106d4e553ab612bb3ce8c0c9706904f",
       "knowledge_scope": "project",
       "memory_version": "9ac5b810dbb78255ec325d4ca370bb24bec588523fd5c5adf5a3a9a20d1e0508",
@@ -173,16 +173,16 @@
       "metadata_hash": "b41a7d2e8f9d5cbd5050f82cc98a1c3bb9ad4c749ad7546ad2829860c1335cfc",
       "old_active": null,
       "owner": "console-live-20260910",
-      "revision": 1,
+      "revision": 2,
       "session_id": "sesn-20260911053502-gww76",
-      "signature": "343050a30b53ae400dbbb0c6f7ad1e04bc5ad0e2b697a54368ff712caa9e591e",
+      "signature": "973ed4afbb11704a60f9f275ac31645ab9a0635caa357a742a699a11ad9349d2",
       "source": "managed-agents-memory-v1",
       "source_uri": null,
       "state": "pending",
       "target": "ma:knowledge:ma-a106d4e553ab612bb3ce8c0c9706904f"
     }
   },
-  "operation_id": "1ba8c69ea28615afd28947a900d65b07",
+  "operation_id": "8a6f369d6bd8b3c74c2eb9ba13b63d46",
   "reviews": {},
   "schema": 1
 }
