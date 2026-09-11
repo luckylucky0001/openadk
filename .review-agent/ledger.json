@@ -76,9 +76,35 @@
       "source_uri": null,
       "state": "applied",
       "target": "ma:knowledge:ma-124a64536989781e6267697c682b3cbb"
+    },
+    "ma-78c6220c26b0f5fd3bab15420756bccd": {
+      "before": "",
+      "before_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": "【会话保存验收 20260911】这是准备取消的测试候选，不是项目规则，不应写入生效记忆。",
+      "content_hash": "6459f2eb195238abb1a92ddb18b6ee7049d20acc3dc58f79916c62378eea5dfe",
+      "expires": 1789107547,
+      "id": "ma-78c6220c26b0f5fd3bab15420756bccd",
+      "knowledge_scope": "project",
+      "memory_version": "9ac5b810dbb78255ec325d4ca370bb24bec588523fd5c5adf5a3a9a20d1e0508",
+      "metadata": {
+        "applicable_paths": [
+          ".review-agent/acceptance/session-memory-20260911.md"
+        ],
+        "memory_type": "experience"
+      },
+      "metadata_hash": "b41a7d2e8f9d5cbd5050f82cc98a1c3bb9ad4c749ad7546ad2829860c1335cfc",
+      "old_active": null,
+      "owner": "console-live-20260910",
+      "revision": 1,
+      "session_id": "sesn-20260911051850-sdjl2",
+      "signature": "7539a3fefe88ca6e044a13056e6d2b2ef2ac15c04e9171995d202be44819f4f6",
+      "source": "managed-agents-memory-v1",
+      "source_uri": null,
+      "state": "pending",
+      "target": "ma:knowledge:ma-78c6220c26b0f5fd3bab15420756bccd"
     }
   },
-  "operation_id": "9649cde66c3065b66cc2b34c9a8650c4",
+  "operation_id": "3fd14dac54d7a03c34f6d029bb9bfdb5",
   "reviews": {},
   "schema": 1
 }
