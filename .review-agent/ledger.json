@@ -121,12 +121,12 @@
       "metadata_hash": "b41a7d2e8f9d5cbd5050f82cc98a1c3bb9ad4c749ad7546ad2829860c1335cfc",
       "old_active": null,
       "owner": "console-live-20260910",
-      "revision": 1,
+      "revision": 2,
       "session_id": "sesn-20260911053502-gww76",
-      "signature": "d05bacbaeb68d48562c80fa17e724c92f72353ef0706d491adf4cdda5b2c12a1",
+      "signature": "765ce2bdb9b268c19c68d4b0f4bf8b8a3c41602d49df17e668f18460a7b36b9a",
       "source": "managed-agents-memory-v1",
       "source_uri": null,
-      "state": "pending",
+      "state": "denied",
       "target": "ma:knowledge:ma-6d4719e48d0ba4cc8da080b58d077cd2"
     },
     "ma-78c6220c26b0f5fd3bab15420756bccd": {
@@ -156,7 +156,7 @@
       "target": "ma:knowledge:ma-78c6220c26b0f5fd3bab15420756bccd"
     }
   },
-  "operation_id": "efc75df5fe3f3194747969bb15a18688",
+  "operation_id": "c9db4dd56c0feb58ba3addaa3143fe50",
   "reviews": {},
   "schema": 1
 }
