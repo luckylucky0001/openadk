@@ -3,6 +3,41 @@
   "applying": null,
   "candidates": {},
   "ma_candidates": {
+    "ma-55de125796967883638734be61439b5f": {
+      "before": "",
+      "before_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": "# etcd 架构与产品迭代方向研究（基于 main 分支静态源码）\n\n> 来源：2026-09 对 etcd-io/etcd main 固定版本 6799d48f（tree 92b0b87a，v3.8.0-alpha 开发中，go1.27）的静态源码阅读，未运行集群/基准测试。版本号与发布状态有时效性，引用前须重新核对 CHANGELOG 与代码。项目知识库当时无专属背景。\n\n## 一、模块布局（go.work 多 module）\n- api（纯 protobuf 契约：etcdserverpb/mvccpb/authpb/membershippb）、client/pkg、client/v3、server、pkg、etcdctl、etcdutl、tests、cache。\n- Raft 共识库自 3.6 独立为外部模块 go.etcd.io/raft/v3（当前 v3.7.0）；存储后端为外部 go.etcd.io/bbolt v1.5.0。服务端只依赖 raft.Node 契约（Propose/Ready/Advance/ReadIndex/Tick）。\n- cache/ 是新增实验性客户端读缓存库：watch 驱动的内存 BTree + 历史窗口重放 + consistent Get 等缓存追平（RequestProgress），README 明确暂不支持经 grpc-proxy 使用。\n\n## 二、运行时分层\n1. 入口 server/etcdmain + server/embed：etcd server / gateway(TCP 转发) / grpc-proxy 三种形态；cmux 在 :2379 复用 gRPC 与 HTTP，:2380 为 peer 口。\n2. gRPC 层 server/etcdserver/api/v3rpc/grpc.go：注册 KV/Watch/Lease/Cluster/Auth/Maintenance/Health；拦截器链 = 日志 → Prometheus → 业务 unary/stream（认证、QuotaKVServer/QuotaLeaseServer 包装）；可选 OTel stats handler。\n3. 核心 EtcdServer（server/etcdserver/server.go，结构体约 L209）：持有 raftNode、consistIndex、UberApplier、mvcc.WatchableKV、lessor、backend、authStore、alarmStore、compactor、corruptionChecker；NewServer 中先恢复 lessor 再恢复 mvcc（租约回挂依赖顺序）。\n4. 写路径：v3rpc → processInternalRaftRequestOnce（v3_server.go L1058，限流/鉴权头/序列化/MaxRequestBytes/请求ID wait）→ raftNode.start（raft.go L173 单 goroutine 消费 Ready：leader 经 rafthttp 并行发送；先 SaveSnap 再 Save WAL 并 fsync；committed entries 封 toApply 送 applyc；Advance；follower 配置变更需等应用完成才回消息）→ run() 主循环（server.go L751）用 FIFO 调度器串行 applyAll → UberApplier 责任链 Corrupt→Capped→Auth→Quota→Backend → MVCC（内存树索引 key→revisions，KV 按 revision 存 bbolt bucket）→ 按请求 ID 唤醒客户端。\n5. 读路径：Linearizable 走 ReadIndex（raftNode 转发 ReadStates 到 read.LinearizableReadLoop，确认 leader 且 appliedIndex 追平后本地读）；Serializable 直接本地读；只读事务用 ConcurrentReadTx 共享读缓冲，CountOnly/KeysOnly 仅查内存索引。\n6. 持久化：storage.Storage 接口契约要求 Save 阻塞到稳定存储；WAL 64MB 分段 + CRC32C + fsync；Snapshotter 管 .snap/.snap.db；3.7 起直接从 v3 store 引导并初始化 confState，彻底脱离 v2 snapshot；RecoverSnapshotBackend 覆盖\"快照已落盘、DB 未更新\"崩溃窗口。\n7. 租约：仅 leader 驱动过期撤销，撤销前 ensureLeadership（tick 活性或线性读确认），防止切主误删；LeaseCheckpoint/LeaseCheckpointPersist 防切主重置 TTL。\n8. 外围：grpc-proxy 做 watch 聚合广播与转发；Learner 非投票成员按 90% 就绪阈值 promote；membership、auth(RBAC/JWT)、alarm(NOSPACE/CORRUPT)、compactor（leader 运行）。\n\n## 三、下一步技术迭代方向（推断，非官方路线图，按确定性分级）\n高确定性（代码已有抓手）：\n- 读扩展：cache/ 客户端缓存毕业 + grpc-proxy 透传 RequestProgress 并打通多级读缓存，承接 K8s apiserver LIST/WATCH 压力（当前 cache 明确不支持 proxy）。\n- 过载保护与尾延迟：PriorityRequest、FastLeaseKeepAlive 毕业；排队/流控、WAL fsync 与 apply 延迟隔离。\n- 在线维护：StopGRPCServiceOnDefrag 指向无中断/滚动 defrag；快照与 DB 膨胀治理；运维能力向 etcdutl 下沉（3.8 加 bbolt 子命令）。\n- 正确性工程化与损坏检测默认化：InitialCorruptCheck/CompactHashCheck 计划默认开启；tests/robustness 线性一致性混沌测试 + Antithesis 常驻验证。\n- 安全默认化与 RBAC 收口：secure-by-default、嵌套事务/watch 等鉴权路径统一收口、TLS 收敛。\n低确定性（结构性天花板，当前主线无代码证据）：\n- 单 Raft 组 + 串行 apply + 单 bbolt 文件决定写吞吐与容量上限；根本出路 Multi-Raft 分片或可插拔/存算分离，但 3.8/3.9 大概率不进主线，更可能以独立实验项目出现。\n- raft/api/client/cache 模块化后的生态化：从\"一个数据库\"转向\"可复用的共识+KV 组件\"，服务 embed 场景。\n\n## 四、迭代脉络（以 CHANGELOG 为准，需复核）\n- 3.6（2025-05 GA）：raft 拆仓、存储包重构到 storage/、TLS1.3、v3 discovery、feature gate 体系、InitialCorruptCheck/CompactHashCheck/LeaseCheckpoint 等 alpha、snapshot-count 默认 10 万→1 万、Distroless、Go 1.23、grpc-gateway v2。\n- 3.7（2026-07 GA）：移除 client/v2、v2discovery、v2 请求/apply_v2 与全部 experimental 旧 flag；从 v3store bootstrap；PriorityRequest、FastLeaseKeepAlive(beta 默认开)、Unix socket、共享缓冲使 lease/用户角色操作提速约 2x、key-only 纯内存 range；protobuf 全面迁 google.golang.org/protobuf；Go 1.26。\n- 3.8（TBC，当前 main）：清理全部 v2 snapshot 残留（停止生成/清理任务/启动清理、移除 --max-snapshots 与 --v2-deprecation）；etcdutl 增加 bbolt 子命令；--metrics extensive 暴露完整 Go runtime/metrics。\n- 4.0（TBD 愿景，部分条目陈旧）：secure by default、corrupt 检查默认开启（启动检查 + 12h 周期）、彻底去 v2、TLS1.13 等。\n- feature gate 现状（server/features/etcd_features.go）：alpha 默认关 = StopGRPCServiceOnDefrag、InitialCorruptCheck、CompactHashCheck、LeaseCheckpoint、LeaseCheckpointPersist、SetMemberLocalAddr、PriorityRequest；beta 默认开 = TxnModeWriteWithSharedBuffer、FastLeaseKeepAlive。\n\n## 五、待验证/局限\n- 纯静态结论，未实测性能；Raft 算法本体在外部仓库未细读；bootstrap、snapshot merge、corrupt checker 边界路径未逐行核对；tests/robustness（线性一致性混沌测试）与 tests/antithesis 是其正确性保障体系，值得后续研究。",
+      "content_hash": "639cd8d915c269c79facf59231243b3f486120da63660274f8682db20e1f83ca",
+      "expires": 1789098992,
+      "id": "ma-55de125796967883638734be61439b5f",
+      "knowledge_scope": "project",
+      "memory_version": "d247376f535b9735465d946afb01fa6003e750f3554e24c2a3c188d6ad5adba5",
+      "metadata": {
+        "applicable_paths": [
+          "server/etcdserver/server.go",
+          "server/etcdserver/raft.go",
+          "server/etcdserver/v3_server.go",
+          "server/etcdserver/apply/",
+          "server/etcdserver/api/v3rpc/",
+          "server/storage/",
+          "server/features/etcd_features.go",
+          "cache/",
+          "CHANGELOG/",
+          "go.work"
+        ],
+        "memory_type": "background"
+      },
+      "metadata_hash": "77b71de467b4033120224e0aa08753f70ba4c460f9c8865fb20199c162fbacd2",
+      "old_active": null,
+      "owner": "console-live-20260910",
+      "revision": 1,
+      "session_id": "sesn-20260910120415-zn64f",
+      "signature": "1ab7fe275823312dc59483c163347fa7fc0ae24505c19ce3bb15410a3aba307b",
+      "source": "managed-agents-memory-v1",
+      "source_uri": null,
+      "state": "pending",
+      "target": "ma:knowledge:ma-55de125796967883638734be61439b5f"
+    },
     "ma-5a167a059d95ffe2ef1b2b51a6fc9557": {
       "before": "",
       "before_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -39,7 +74,7 @@
       "target": "ma:knowledge:ma-5a167a059d95ffe2ef1b2b51a6fc9557"
     }
   },
-  "operation_id": "1beea1f29e45b9cbb0e1860aa9f18fa4",
+  "operation_id": "bce23e8cce35c3464a894844073d2d13",
   "reviews": {},
   "schema": 1
 }
