@@ -77,6 +77,32 @@
       "state": "applied",
       "target": "ma:knowledge:ma-124a64536989781e6267697c682b3cbb"
     },
+    "ma-61a6a6f134b601716780d5a566808073": {
+      "before": "",
+      "before_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": "【会话保存验收 20260911】仅用于验证演示保存流程，不是项目业务规则。需要在确认后才生效。",
+      "content_hash": "b555efad898423fd2e31963204ba6349d44eec43d310ae696c4fdc26787c8b7f",
+      "expires": 1789107666,
+      "id": "ma-61a6a6f134b601716780d5a566808073",
+      "knowledge_scope": "project",
+      "memory_version": "9ac5b810dbb78255ec325d4ca370bb24bec588523fd5c5adf5a3a9a20d1e0508",
+      "metadata": {
+        "applicable_paths": [
+          ".review-agent/acceptance/session-memory-20260911.md"
+        ],
+        "memory_type": "experience"
+      },
+      "metadata_hash": "b41a7d2e8f9d5cbd5050f82cc98a1c3bb9ad4c749ad7546ad2829860c1335cfc",
+      "old_active": null,
+      "owner": "console-live-20260910",
+      "revision": 1,
+      "session_id": "sesn-20260911051850-sdjl2",
+      "signature": "18187eedc658b5cbfe4ae7e86a41d96d71b1e980ea034a274032b3ebc1a1f10a",
+      "source": "managed-agents-memory-v1",
+      "source_uri": null,
+      "state": "pending",
+      "target": "ma:knowledge:ma-61a6a6f134b601716780d5a566808073"
+    },
     "ma-78c6220c26b0f5fd3bab15420756bccd": {
       "before": "",
       "before_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -104,7 +130,7 @@
       "target": "ma:knowledge:ma-78c6220c26b0f5fd3bab15420756bccd"
     }
   },
-  "operation_id": "0bf3f0695d8c054b799cf4fbfb3eb057",
+  "operation_id": "c1a2af2427f43d492646dd7492682866",
   "reviews": {},
   "schema": 1
 }
