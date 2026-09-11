@@ -17,9 +17,27 @@
       "source": "managed-agents-memory-v1",
       "target": "ma:knowledge:ma-124a64536989781e6267697c682b3cbb",
       "uri": "viking://user/default/memories/experiences/review-console-20260910/38eeb1689dad01f6d27cdc129f09b77ae9a8fa36079bc261c3bacf917f738894.md"
+    },
+    "ma:knowledge:ma-a106d4e553ab612bb3ce8c0c9706904f": {
+      "candidate_id": "ma-a106d4e553ab612bb3ce8c0c9706904f",
+      "content": "【会话保存验收 20260911】仅用于验证演示保存流程，不是项目业务规则。保存前核对全文，保存后核对 OpenViking 原文与 Git 生效记录。",
+      "content_hash": "2862d552d5a016c533df529cfad8fe57d90a12f724c226ba7f9c1b4859037548",
+      "metadata": {
+        "applicable_paths": [
+          ".review-agent/acceptance/session-memory-20260911.md"
+        ],
+        "memory_type": "experience"
+      },
+      "owner": "console-live-20260910",
+      "revision": 2,
+      "session_id": "sesn-20260911053502-gww76",
+      "signature": "6dd9a338bae908b5ce1856e0569f9797316a9dd2cb847eea105e965b1a56a07b",
+      "source": "managed-agents-memory-v1",
+      "target": "ma:knowledge:ma-a106d4e553ab612bb3ce8c0c9706904f",
+      "uri": "viking://user/default/memories/experiences/review-console-20260910/2862d552d5a016c533df529cfad8fe57d90a12f724c226ba7f9c1b4859037548.md"
     }
   },
-  "applying": "ma-a106d4e553ab612bb3ce8c0c9706904f",
+  "applying": null,
   "candidates": {},
   "ma_candidates": {
     "ma-006728fd0ff3ae98184ee3fc74dceeb1": {
@@ -165,6 +183,7 @@
       "expires": 1789109009,
       "id": "ma-a106d4e553ab612bb3ce8c0c9706904f",
       "knowledge_scope": "project",
+      "memory_uri": "viking://user/default/memories/experiences/review-console-20260910/2862d552d5a016c533df529cfad8fe57d90a12f724c226ba7f9c1b4859037548.md",
       "memory_version": "9ac5b810dbb78255ec325d4ca370bb24bec588523fd5c5adf5a3a9a20d1e0508",
       "metadata": {
         "applicable_paths": [
@@ -177,14 +196,14 @@
       "owner": "console-live-20260910",
       "revision": 2,
       "session_id": "sesn-20260911053502-gww76",
-      "signature": "a39aca33f2c364a9744d4a20bac205c904f2db85c1628298daac4d054a643b5c",
+      "signature": "b5aec315c4f93a0b192225054263d6cea717a327e172c2bde216bc29df72aa69",
       "source": "managed-agents-memory-v1",
       "source_uri": null,
-      "state": "applying",
+      "state": "applied",
       "target": "ma:knowledge:ma-a106d4e553ab612bb3ce8c0c9706904f"
     }
   },
-  "operation_id": "f67e7668e10470be920c51ea702cf3ca",
+  "operation_id": "aa09d9136fc6c674fa64d1e125ba52d6",
   "reviews": {},
   "schema": 1
 }
