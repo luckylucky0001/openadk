@@ -3,6 +3,39 @@
   "applying": null,
   "candidates": {},
   "ma_candidates": {
+    "ma-1f5f740f1bc999bef204b82939f4b536": {
+      "before": "",
+      "before_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": "etcd 架构分层与产品迭代主线（源码依据：main @ e041c4fa，v3.8.0-alpha.0，Go 1.27）。\n\n【定位】CNCF 毕业的分布式强一致 KV，Raft 复制，基准 1 万写/秒，最大用户为 Kubernetes；可靠性优先于功能扩张，roadmap 明确未来几个版本以偿还技术债为主。\n\n【模块结构】go.work 多 module 单仓：api（纯 protobuf）、client/v3 与 client/pkg、server、cache（2025 年新增的实验性客户端一致性读缓存库，单 Watch+RequestProgress 驱动本地 BTree 快照与 fan-out，不支持经 grpc-proxy 使用）、etcdctl、etcdutl（含 bbolt surgery 子命令）、pkg、tests（含 robustness/gofail 故障注入）。共识库已独立为 go.etcd.io/raft/v3，存储引擎为独立的 go.etcd.io/bbolt v1.5。\n\n【server 四层】\n1) 接入层 etcdmain(main)→embed(配置/生命周期)：:2379 gRPC + grpc-gateway v2(REST/JSON) + websocket；:2380 rafthttp（HTTP/2 流式/pipeline/snapshot）；旁路 grpc-proxy（watch 合并、范围缓存）与 tcp-proxy。\n2) 核心层 EtcdServer（server/etcdserver/server.go，NewServer 组装一切）：raftNode、UberApplier、membership（成员/learner/降级）、read（线性读循环）、lease、auth、alarm、compactor、corruptionChecker。\n3) 共识层 go.etcd.io/raft：选举/日志复制/ReadIndex/ConfChange/Snapshot。\n4) 存储层 storage/wal（64MB 分段 $seq-$index.wal，CRC32+8 字节对齐防撕裂）、storage/snap、storage/backend（bbolt 批量事务、共享读缓冲）、storage/mvcc（内存 BTree treeIndex 索引 + bbolt 持久化多版本 KV + watchableStore 的 synced/unsynced 两组 watcherGroup）。\n\n【写路径】gRPC(v3rpc 拦截器)→非 leader 转发→raftNode.Propose(InternalRaftRequest)→raftNode.start 收 Ready：先投 applyc，leader 并行向 follower 发消息，快照先落盘，WAL.Save 并 fsync，MemoryStorage.Append，Advance→EtcdServer.run 用 FIFO 调度器串行 applyAll→UberApplier 责任链 Corrupt→Capped(NOSPACE)→Auth→Quota→Backend→mvcc 写事务分配 revision(main,sub)并触发 watch。关键恢复顺序：必须先恢复 lessor 再恢复 mvcc.KV（KV 恢复时要把 key 重新挂到 lease）。WAL 保证已提交日志不丢，bbolt 快照保证状态机持久化，二者经 cindex consistent index 关联防重复 apply。\n\n【读路径】默认线性一致：ReadIndex 协议（server/etcdserver/read/read.go），单 LinearizableReadLoop 合并并发读——发一个 ReadIndex→拿 confirmedIndex→等本机 appliedIndex≥confirmedIndex→一次放行所有等待者；leader 变更立即作废在途请求，新 term 首次提交前(firstCommitInTerm)需重发 ReadIndex。Serializable 读直接本地 bbolt，可能稍旧。\n\n【迭代主线】\n- 3.6（2025-05 GA）：移除 --enable-v2/内置 proxy 等 flag、raft 独立仓库、支持 downgrade/etcdutl migrate、/livez+/readyz、grpc-gateway v2、TLS1.3、snapshot-count 默认 10 万→1 万、Distroless 镜像。\n- 3.7（2026-07 GA）：删 v2discovery/client/v2/apply_v2；Bootstrap etcdserver from v3store（P0，confState 从 v3 store 初始化）；RangeStream（P0，分块流式 Range，初始 10 条、按 MaxRequestBytes 动态倍增/折半，全流 pin 同一 revision）；protobuf 统一到 google.golang.org/protobuf（P0）；FastLeaseKeepAlive(beta 默认开，跳过等 applied index)；PriorityRequest(alpha，LeaseRevoke 等高优请求 maxPriorityGap=2×normal)；Unix socket；lease/auth 读用共享缓冲(最高 2x)；keys-only range 仅走内存索引；OTel otelgrpc 升级；clientv3 非阻塞拨号（弃用 grpc.WithBlock）。\n- 3.8（开发中，TBC）：P0 彻底停止生成并清理 v2 快照、删 --max-snapshots/--v2-deprecation、启动时清理遗留文件；P1 官方性能验证套件；P1 评估集成 raft async write（tentative，代码尚未集成）；P1 评估替换 cmux；etcdutl 增加 bbolt 子命令；--metrics extensive 暴露完整 Go runtime/metrics。\n- 4.0（占位草案，非承诺）：Secure by default（默认 TLS、TLS1.3、initial-corrupt-check 默认开+12h 巡检）、彻底无 v2 store/proxy、API 清理。\n- 长期 backlog：Proposal 携带 Merkle root(#13839)、Distributed Tracing 完善、CA rotation(#11555)、raft 配置变更校验增强。\n\n【审查提示】feature gate 集中于 server/features/etcd_features.go（Alpha/Beta 分级，新增特性需在此登记 owner/PR/版本）；CHANGELOG-4.0.md 含过时条目（如 Require Go 2）不能当承诺；v3.8 为开发分支可能不稳定。",
+      "content_hash": "b197b628a55c4ebc9e03159047e2ee3bfc3dade0744271eb4802573e77be50e9",
+      "expires": 1789112949,
+      "id": "ma-1f5f740f1bc999bef204b82939f4b536",
+      "knowledge_scope": "project",
+      "memory_version": "d247376f535b9735465d946afb01fa6003e750f3554e24c2a3c188d6ad5adba5",
+      "metadata": {
+        "applicable_paths": [
+          "server/**",
+          "cache/**",
+          "api/**",
+          "client/**",
+          "Documentation/**",
+          "CHANGELOG/**",
+          "go.mod",
+          "go.work"
+        ],
+        "memory_type": "background"
+      },
+      "metadata_hash": "604b7cccd7d8a25d121b349d04f13ec5c8d465b61e25e4959add0984bbce7931",
+      "old_active": null,
+      "owner": "console-live-20260910",
+      "revision": 1,
+      "session_id": "sesn-20260911062935-wsfjp",
+      "signature": "0bf2dc93a8c65bf23ac88c7c4dc29ac4abc3e8500ecd6d8f569fe122ca91b15f",
+      "source": "managed-agents-memory-v1",
+      "source_uri": null,
+      "state": "pending",
+      "target": "ma:knowledge:ma-1f5f740f1bc999bef204b82939f4b536"
+    },
     "ma-55de125796967883638734be61439b5f": {
       "before": "",
       "before_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -74,7 +107,7 @@
       "target": "ma:knowledge:ma-5a167a059d95ffe2ef1b2b51a6fc9557"
     }
   },
-  "operation_id": "bce23e8cce35c3464a894844073d2d13",
+  "operation_id": "fdbee861f8b73926da35f4dfb0edf283",
   "reviews": {},
   "schema": 1
 }
