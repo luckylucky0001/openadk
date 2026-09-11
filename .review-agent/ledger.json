@@ -95,16 +95,16 @@
       "metadata_hash": "b41a7d2e8f9d5cbd5050f82cc98a1c3bb9ad4c749ad7546ad2829860c1335cfc",
       "old_active": null,
       "owner": "console-live-20260910",
-      "revision": 1,
+      "revision": 2,
       "session_id": "sesn-20260911051850-sdjl2",
-      "signature": "7539a3fefe88ca6e044a13056e6d2b2ef2ac15c04e9171995d202be44819f4f6",
+      "signature": "03e278dcb139d5ae32e224ce3ad24ff3438de5f3805723dafe69ef0bb0013841",
       "source": "managed-agents-memory-v1",
       "source_uri": null,
-      "state": "pending",
+      "state": "denied",
       "target": "ma:knowledge:ma-78c6220c26b0f5fd3bab15420756bccd"
     }
   },
-  "operation_id": "3fd14dac54d7a03c34f6d029bb9bfdb5",
+  "operation_id": "0bf3f0695d8c054b799cf4fbfb3eb057",
   "reviews": {},
   "schema": 1
 }
