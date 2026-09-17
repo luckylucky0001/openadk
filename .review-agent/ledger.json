@@ -201,9 +201,35 @@
       "source_uri": null,
       "state": "applied",
       "target": "ma:knowledge:ma-a106d4e553ab612bb3ce8c0c9706904f"
+    },
+    "ma-cdee294f7655765da0bd8f871b00e13d": {
+      "before": "",
+      "before_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": "【发布验收 20260917】此条仅验证会话确认与状态查询，不是项目业务规则。确认后须核对 OpenViking 原文和 Git 生效记录；查询不授权新的写入。",
+      "content_hash": "5322db0e243104a8817fae1b72af47a45a1dd5912493759df094d7fb87cb0ef7",
+      "expires": 1789639443,
+      "id": "ma-cdee294f7655765da0bd8f871b00e13d",
+      "knowledge_scope": "project",
+      "memory_version": "97548cfb7b675c338832351f2087de70d1749249731239b1797c680b6d5cbd83",
+      "metadata": {
+        "applicable_paths": [
+          ".review-agent/acceptance/session-memory-recovery-20260917.md"
+        ],
+        "memory_type": "experience"
+      },
+      "metadata_hash": "4a6fc5d88b1be6dd768887b6a580875d570cca88d85685bc5a0702839bb1f318",
+      "old_active": null,
+      "owner": "console-recovery-20260917",
+      "revision": 1,
+      "session_id": "sesn-20260917090320-zkfbm",
+      "signature": "af23d7fa6468ce05c0bae739bca71e21b7efd1d7210403983924947ce6b0bdf5",
+      "source": "managed-agents-memory-v1",
+      "source_uri": null,
+      "state": "pending",
+      "target": "ma:knowledge:ma-cdee294f7655765da0bd8f871b00e13d"
     }
   },
-  "operation_id": "aa09d9136fc6c674fa64d1e125ba52d6",
+  "operation_id": "8d1af32f8c621bd2021482daa67b5cc6",
   "reviews": {},
   "schema": 1
 }
