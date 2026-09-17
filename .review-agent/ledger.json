@@ -37,7 +37,7 @@
       "uri": "viking://user/default/memories/experiences/review-console-20260910/2862d552d5a016c533df529cfad8fe57d90a12f724c226ba7f9c1b4859037548.md"
     }
   },
-  "applying": null,
+  "applying": "ma-cdee294f7655765da0bd8f871b00e13d",
   "candidates": {},
   "ma_candidates": {
     "ma-006728fd0ff3ae98184ee3fc74dceeb1": {
@@ -205,6 +205,8 @@
     "ma-cdee294f7655765da0bd8f871b00e13d": {
       "before": "",
       "before_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "confirmed_at": 1789635999,
+      "confirmed_memory_version": "97548cfb7b675c338832351f2087de70d1749249731239b1797c680b6d5cbd83",
       "content": "【发布验收 20260917】此条仅验证会话确认与状态查询，不是项目业务规则。确认后须核对 OpenViking 原文和 Git 生效记录；查询不授权新的写入。",
       "content_hash": "5322db0e243104a8817fae1b72af47a45a1dd5912493759df094d7fb87cb0ef7",
       "expires": 1789639443,
@@ -222,14 +224,14 @@
       "owner": "console-recovery-20260917",
       "revision": 1,
       "session_id": "sesn-20260917090320-zkfbm",
-      "signature": "af23d7fa6468ce05c0bae739bca71e21b7efd1d7210403983924947ce6b0bdf5",
+      "signature": "a190c0493d494ce1d1dc97ca408d8ebdd8f647e3634d069e2959e5439686c783",
       "source": "managed-agents-memory-v1",
       "source_uri": null,
-      "state": "pending",
+      "state": "applying",
       "target": "ma:knowledge:ma-cdee294f7655765da0bd8f871b00e13d"
     }
   },
-  "operation_id": "8d1af32f8c621bd2021482daa67b5cc6",
+  "operation_id": "6f6fb38239cece36ba2caa2ab2974a3b",
   "reviews": {},
   "schema": 1
 }
